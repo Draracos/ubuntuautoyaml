@@ -1,0 +1,63 @@
+autoinstall:
+	version: 1
+	interactive-sections:
+	-identity
+	-active-directory
+
+#Start
+	locale: "en_US.UTF-8"
+	timezone: "Etc/ETC"
+	keyboard:
+		layout: us
+		variant: ""
+		toggle: null
+	source:
+		search_drivers: true
+		id: ubuntu-desktop-minimal
+#Network
+	network:
+		version: 2
+		ethernets:
+			eth0:
+			dhcp4: true
+
+#Identity
+	identity:
+		realname: 'IT Admin'
+		username: IT
+		password: '$6$rOFcxdfxaHGb7pHZ$djtmXSUHP79.0KyAyyZIdfz7pAMGD0GAi1hgNV1jSycjoxK42MZrzQJo2LWFJFR5OlrWj6oRW.adSeQWd5LYY/'
+		hostname: ''
+	identity:
+		realname: 'Kiosk'
+		username: kiosk
+		password: '$6$Pw1hhVi9LgYJmZzo$l8JtX1APT.MaQOO.GB46lJ6fpoLORYTKhXX32.Dj9PcX2sNAYxMh.CxFkADGOYyc3ZG91Enok80HfbTitn6ep.'
+		hostname: ''
+
+#Active Directory
+	active-directory:
+		admin-name: ''
+		domain-name: MAGNA.GLOBAL
+
+#Drivers
+	drivers:
+		install: true
+
+#Packages
+	packages:
+		- openssh-server
+  		- htop
+  		- x11vnc
+  		- samba
+  		- sssd
+  		- adcli
+  		- krb5-user	
+
+#Late Commands
+	late-commands:
+		-"echo 'Installing packages from installed-packages.txt';"
+  		- "curtin in-target -- dpkg --set-selections < /target/installed-packages.txt"
+  		- "curtin in-target -- apt-get -y dselect-upgrade"
+  		- "curtin in-target -- rsync -avz /cdrom/backup/ /target/etc/"
+
+#Reboot
+	shutdown: reboot
