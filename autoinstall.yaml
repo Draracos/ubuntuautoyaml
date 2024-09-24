@@ -6,7 +6,7 @@ autoinstall:
 
 #Start
 	locale: "en_US.UTF-8"
-	timezone: "Etc/ETC"
+	timezone: "Etc/ET"
 	keyboard:
 		layout: us
 		variant: ""
